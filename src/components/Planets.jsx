@@ -1,14 +1,15 @@
 import { gql, useQuery } from "@apollo/client";
 import React from "react";
-import { List, ListItem } from "./shared/List";
+import { Link } from "react-router-dom";
+import { List, ListItemWithLink } from "./shared/List";
 import { Tag } from "./shared/Tag";
 
 const PLANETS = gql`
-  {
+  query {
     planets {
-      cuisine
       id
       name
+      cuisine
     }
   }
 `;
@@ -18,9 +19,11 @@ const Planets = ({ newPlanets }) => {
 
   const renderPlanets = (planets) => {
     return planets.map(({ id, name, cuisine }) => (
-      <ListItem key={id}>
-        {name} <Tag>{cuisine}</Tag>
-      </ListItem>
+      <ListItemWithLink key={id}>
+        <Link to={"planets/" + id}>
+          {name} <Tag>{cuisine}</Tag>
+        </Link>
+      </ListItemWithLink>
     ));
   };
 
